@@ -9,13 +9,16 @@ import {
   Query,
 } from '@nestjs/common';
 import { CreateNinjaDto } from './dto/create-ninja.dto';
+import { NinjasService } from './ninjas.service';
 
 @Controller('ninjas')
 export class NinjasController {
+  constructor(private readonly ninjasService: NinjasService) {}
+
   // GET /ninjas --> []
   @Get()
-  getNinjas(@Query('type') type: string) {
-    return [{ id: 1, type: type }];
+  getNinjas(@Query('weapon') weapon: 'Shuriken' | 'Katana' | 'Fists') {
+    return this.ninjasService.getNinjas(weapon);
   }
 
   // GET /ninjas/:id --> {}
